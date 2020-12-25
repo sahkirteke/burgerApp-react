@@ -1,38 +1,37 @@
-import React from 'react';
+import React , {Component} from 'react';
 
-import Auxx from '../../../hoc/Auxx';
+import Aux from '../../../hoc/Auxx/Auxx';
+import Button from '../../UI/Button/Button';
 
+class OrderSummary extends Component {
 
+ 
+    render (){
 
-const orderSummary = (props) => 
-{
-    const ingredientSummary = Object.keys(props.ingredients)
-    .map(igKey =>{
-        return (
-        <li key={igKey}>
-            <span style={{textTransform : 'capitalize'}}>{igKey}</span> : 
-            {props.ingredients[igKey]}
+        const ingredientSummary = Object.keys( this.props.ingredients )
+        .map( igKey => {
+            return (
+                <li key={igKey}>
+                    <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {this.props.ingredients[igKey]}
+                </li> );
+        } );
 
-        </li>);
-    } );
+        return ( 
+        <Aux>
+            <h3>Your Order</h3>
+            <p>A delicious burger with the following ingredients:</p>
+            <ul>
+                {ingredientSummary}
+            </ul>
+            <p><strong>Total Price: {this.props.price.toFixed(2)}</strong></p>
+            <p>Continue to Checkout?</p>
+            <Button btnType="Danger" clicked={this.props.purchaseCancelled}>Geri</Button>
+            <Button btnType="Success" clicked={this.props.purchaseContinued}>Devam</Button>
+        </Aux>
 
+        );
+    }
 
-return (
-    <Auxx>
-    <h3> Siparişiniz</h3>
-    <p> güzel bir burgerŞah ve malzemeleri:</p>
-    <ul>
-        {ingredientSummary}
-    </ul>
-    <p>devam etmietk için  tıkla</p>
-</Auxx>
-);
+} 
 
-        
-   
-
-
-
-};
-
-export default orderSummary ;
+export default OrderSummary;
