@@ -5,11 +5,11 @@ import Aux from '../../hoc/Auxx/Auxx';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/acitons/index';
 
 
 
@@ -20,23 +20,21 @@ class BurgerBuilder extends Component {
     //     this.state = {...}
     // }
     state = {
-        purchasable: false,
-        purchasing: false,
-        loading: false,
-        error :false
+        purchasing: false
+      
     }
-    // componentDidMount () {
-    //      axios.get('https://react-my-burger-48d76-default-rtdb.firebaseio.com/ingredients.json')
-    //      .then(res => {
-    //          this.setState({ingredients: res.data});
+    componentDidMount () {
+        //  axios.get('https://react-my-burger-48d76-default-rtdb.firebaseio.com/ingredients.json')
+        //  .then(res => {
+        //      this.setState({ingredients: res.data});
 
-    //      } )
-    //       .catch(error=> {
-    //           this.setState({error:true});
+        //  } )
+        //   .catch(error=> {
+        //       this.setState({error:true});
 
-    //     }) ;
+        // }) ;
 
-    // }
+    }
     
    
     
@@ -161,9 +159,9 @@ class BurgerBuilder extends Component {
                 purchaseContinued={this.purchaseContinueHandler} />;
 
         }
-        if (this.state.loading){
-            orderSummary = <Spinner/>
-        }
+        // if (this.state.loading){
+        //     orderSummary = <Spinner/>
+        // }
         
         
        
@@ -189,8 +187,8 @@ const  mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName)=> dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName : ingName }),
-        onIngredientRemoved: (ingName)=> dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName : ingName })
+        onIngredientAdded: (ingName)=> dispatch(burgerBuilderActions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName)=> dispatch(burgerBuilderActions.removeIngredient(ingName))
     };
 }
 
