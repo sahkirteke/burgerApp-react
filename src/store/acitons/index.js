@@ -1,11 +1,10 @@
-// import { addIngredient } from "./burgerBuilder";
-
 export {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    initIngredients
 } from './burgerBuilder';
-// export {
-//     addIngredient,
-//     removeIngredient
-// } from './burgerBuilder';
-
+export {
+    purchaseBurger,
+    purchaseInit,
+    fetchOrders
+} from './order';

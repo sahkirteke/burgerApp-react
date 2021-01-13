@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
-import { Route } from 'react-router-dom';
+import { Route , Redirect} from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
+// import * as actions from '../../store/acitons/index';
 
 class Checkout extends Component{
     state = {
@@ -11,6 +12,7 @@ class Checkout extends Component{
         price:0
     }
 
+   
     // componentWillMount () {
     //     const query = new URLSearchParams(this.props.location.search);
     //     const ingredients = {};
@@ -34,19 +36,25 @@ class Checkout extends Component{
         this.props.history.replace('/checkout/contact-data');
     }
     render ( ){
-
-        return (
-            <div>
-                <CheckoutSummary 
-                    ingredients= {this.props.ings}
-                    checkoutCancelled={this.checkoutCancelledHandler}
-                    checkoutContinued={this.checkoutContinuedHandler}
-                />
-                <Route 
-                    path={this.props.match.path + '/contact-data'} 
-                   component = {ContactData} />
+        let summary = <Redirect to="/"/>
+        if (this.props.ings) {
+            const purchaseRedirect = this.props.purchased ? <Redirect to = "/" /> : null
+            summary = (
+                <div>
+                    {purchaseRedirect}
+                    <CheckoutSummary 
+                        ingredients= {this.props.ings}
+                        checkoutCancelled={this.checkoutCancelledHandler}
+                        checkoutContinued={this.checkoutContinuedHandler}
+                    />
+                    <Route 
+                        path={this.props.match.path + '/contact-data'} 
+                    component = {ContactData} />
             </div>
-        );
+            );
+        }
+
+        return summary;
 
     }
 
@@ -55,9 +63,11 @@ class Checkout extends Component{
 
 const mapStateToProps = state => {
     return {
-        ings:state.ingredients
+        ings:state.burgerBuilder.ingredients,
+        purchased : state.burgerBuilder.purchased
     };
 };
+
 
 
 
