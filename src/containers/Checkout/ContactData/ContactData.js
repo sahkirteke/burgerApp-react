@@ -7,7 +7,7 @@ import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import * as action from '../../../store/acitons/index';
+import * as action from '../../../store/actions/index';
 
 
 class ContactData extends Component {
@@ -110,7 +110,7 @@ class ContactData extends Component {
             price : this.props.price,
             orderData:formData
         }
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
 
         // axios.post('/orders.json', order)
         // .then(res => {
@@ -202,12 +202,13 @@ const mapStateToProps = state => {
     return {
         ing: state.burgerBuilder.ingredients,
         price : state.burgerBuilder.totalPrice,
-        loading :state.order.loading
+        loading :state.order.loading,
+        token : state.auth.token
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger : (orderData) => dispatch(action.purchaseBurger(orderData))
+        onOrderBurger : (orderData, token) => dispatch(action.purchaseBurger(orderData, token))
     };
     
 };
